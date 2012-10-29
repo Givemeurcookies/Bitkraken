@@ -1,0 +1,57 @@
+* {
+padding:0;
+margin:0;
+}
+body {
+	min-height:100%;
+	border-width: 0px; width: 100%; height: 100%;
+	font-family: ‘Lucida Sans Unicode’, ‘Lucida Grande’, sans-serif;
+	font-size: 15px;
+}
+ul, ol { padding-left:40px; padding-top:5px; padding-bottom:5px;}
+li { margin-top:5px; margin-bottom:5px; }
+h1, h2, p { margin: 20px 0 20px 0; text-align:center;}
+a { color: #693f3f; font-weight:bold; text-decoration: none;}
+a:hover { color: #3b3b3b; -webkit-transition: all 0.2s ease; -moz-transition: all 0.2s ease; -o-transition: all 0.2s ease; transition: all 0.2s ease;}
+label {
+	float: left; clear: left; margin: 11px 20px 0 0; width: 95px;
+	text-align: right; font-size: 16px; color: #bcbcbc;
+	text-transform: uppercase;
+	line-height: 1.73em;
+	}
+input {
+	width: 260px; height: 35px; padding: 4px 20px 4px 20px; margin: 0 0 20px 0;
+	background:#3d3d3d;
+	border: 0px;
+	border-radius: 5px; -moz-border-radius: 5px; -webkit-border-radius: 5px;
+	-moz-box-shadow: 0px 1px 0px #f2f2f2;-webkit-box-shadow: 0px 1px 0px #f2f2f2;
+	font-family: sans-serif; font-size: 16px; color: #bcbcbc; text-shadow: 0px -1px 0px #334f71;
+}
+input[type=submit] { 
+	width: 185px; height: 52px; float: right; padding: 10px 15px; margin: 0 px 0 0;
+	border: 0px;
+background-image: linear-gradient(bottom, rgb(0,46,102) 11%, rgb(64,189,230) 90%);
+background-image: -o-linear-gradient(bottom, rgb(0,46,102) 11%, rgb(64,189,230) 90%);
+background-image: -moz-linear-gradient(bottom, rgb(0,46,102) 11%, rgb(64,189,230) 90%);
+background-image: -webkit-linear-gradient(bottom, rgb(0,46,102) 11%, rgb(64,189,230) 90%);
+background-image: -ms-linear-gradient(bottom, rgb(0,46,102) 11%, rgb(64,189,230) 90%);
+
+background-image: -webkit-gradient(
+	linear,
+	left bottom,
+	left top,
+	color-stop(0.11, rgb(0,46,102)),
+	color-stop(0.9, rgb(64,189,230))
+);
+	cursor: pointer;
+}
+input:focus { 
+	background: #2d2d2d;
+	outline:none;
+}
+/* ID's */ 
+#mainholder{ min-width: 100%; min-height: 100%;
+}
+#subholder{ margin: 100px auto 0px auto; width:450px; min-height:100%;}
+
+.msg {position:absolute; margin:11px 13px 0px;   filter: alpha(opacity=0); -moz-opacity: 0; font-weight:bold;}

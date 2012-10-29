@@ -1,0 +1,1 @@
+<p> 404 not found - The site "<?php echo $name; ?>" doesn't exist.</p>

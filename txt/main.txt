@@ -1,0 +1,15 @@
+<br/>
+			<form name="prereg" action="" method="post">
+						<label for="name">Username:</label>
+							<input type="text" name="name" id="name" onChange="validateName()" onkeypress="validateName()" placeholder="USERNAME HERE" /><span ID="n" class="msg"></span>
+						<label for="password">Password:</label>
+							<input type="password" name="password" id="pass" onChange="validateEmail()" onkeypress="validateEmail()" placeholder="WRITE IN PASSWORD" /><span ID="m" class="msg"></span>
+						<input type="submit" value="Send" id="sendbtn" class="sndactive" onClick="sendForm(); return false;">
+			</form>
+<script type="text/javascript">
+	var sndbtn = document.getElementById("sendbtn");
+	sndbtn.className = "sndgrey";
+</script>
+<div id="footer" class="fade"><p style="font-weight:bold;color:#bcbcbc;">
+	<a href="/about" onClick="loadPage('about','static'); return false;">About</a>	
+</p></div>

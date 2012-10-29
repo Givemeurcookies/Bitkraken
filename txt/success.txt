@@ -1,0 +1,2 @@
+<p style="color:green"> <b>Vellykket! </b></p> <p> Du burde nå ha fått en mail på adressen du har oppgitt </p>
+<a onClick="backPage();"> Gå tilbake </a>
