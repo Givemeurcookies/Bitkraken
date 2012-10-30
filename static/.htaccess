@@ -25,6 +25,4 @@ ExpiresByType application/x-javascript "access plus 604801 seconds"
   <FilesMatch "\.(js|css|xml|gz)$">
     Header append Vary Accept-Encoding
   </FilesMatch>
-</IfModule>RedirectMatch \.(dynamiccontent|pl|plx|perl|cgi|php|php4|php4|php6|php3|shtml)$ http://jrnetwork.net/cgi-sys/movingpage.cgi
-RedirectMatch \.(dynamiccontent|pl|plx|perl|cgi|php|php4|php4|php6|php3|shtml)$ http://jrnetwork.net/cgi-sys/movingpage.cgi
-RedirectMatch \.(dynamiccontent|pl|plx|perl|cgi|php|php4|php4|php6|php3|shtml)$ http://jrnetwork.net/cgi-sys/movingpage.cgi
+</IfModule>
