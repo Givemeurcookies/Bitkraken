@@ -6,9 +6,11 @@
 		</div>
 		<div id="mainbody"><?php require ($getcontent); ?>		
 			<div id="footer" class="fade"><p style="font-weight:bold;color:#bcbcbc;">
-				<?php 
-			if ($name != "main") { echo '<a href="/" onClick="loadPage('."'main',"."'static'".'); return false;">Login</a>'; }
-			if ($name != "about") { echo '<a href="/about" onClick="loadPage('."'about',"."'static'".'); return false;">About</a>'; }
+			<?php
+				//Needs better code here.
+				if ($name != 'main') echo '<a href="/" onClick="loadPage('."'main',"."'static'".'); return false;">Login</a>';
+				if ($name != 'main' && $name != 'about') echo ' | ';
+				if ($name != 'about') echo '<a href="/about" onClick="loadPage('."'about',"."'static'".'); return false;">About</a>';
 			?>
 			
 			</p></div>
