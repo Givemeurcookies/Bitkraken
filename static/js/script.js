@@ -73,7 +73,7 @@ String.prototype.capitalize = function() {
 
 window.onpopstate = function(e){
     if(e.state){
-	fade('mainbody');
+      fade('mainbody');
     	pageresponse = e.state.txt;
     	document.title = e.state.pageTitle;
     	setTimeout(addtoPage, TimeDelay)
