@@ -10,7 +10,7 @@ function validateName (){
 	var x=document.forms["prereg"]["name"].value;
 	var changed = false;
 	var checkchange = validation[0];
-	if (x==null || x=="" || x.length < 3 || hasWhiteSpace(x) == false) { validation[0] = false; Msgtxt[0] = "Ugyldig navn!";}
+	if (x==null || x=="" || x.length < 3 || hasWhiteSpace(x) == false) { validation[0] = false; Msgtxt[0] = "Incorrect!";}
 	else { validation[0] = true; Msgtxt[0] = "";}
 	
 	if (checkchange != validation[0]) changed = true;
@@ -19,14 +19,14 @@ function validateName (){
 	togfadeN = false;
 	if (changed === true) validateCheckpoint();
 }
+//Validate email is not needed right now. 
 function validateEmail(){
 	var x=document.forms["prereg"]["email"].value;
 	var atpos=x.indexOf("@");
 	var dotpos=x.lastIndexOf(".");
 	var changed = false;
 	var checkchange = validation[1];
-
-	if (atpos<1 || dotpos<atpos+2 || dotpos+2>=x.length){ validation[1] = false; Msgtxt[1] = "Ugyldig e-mail!"} 
+	if (atpos<1 || dotpos<atpos+2 || dotpos+2>=x.length){ validation[1] = false; Msgtxt[1] = "Incorrect Email!"} 
 	else { validation[1] = true; Msgtxt[1] = "";}
 	
 	if (checkchange != validation[1]) changed = true;
@@ -34,6 +34,10 @@ function validateEmail(){
 	if (togfadeM === false && changed === true) {setTimeout(function(){fadeMsg("m",1)},TimeDelay);} else if (togfadeM === true) {fadeMsg("m",1)}
 	togfadeM = false;
 	validateCheckpoint();
+}
+//This function is needed
+function validatePassword(){
+
 }
 function fadeMsg(id, num) {
 var x = document.getElementById(id);
@@ -43,7 +47,7 @@ x.innerHTML = Msgtxt[num];
 init(Msgname[num], 150, 1);
 }
 function validateCheckpoint (){
-//Checking the fullname
+	//Need to rewrite so functions return boolean, so there is no need for variables.
 	if (validation[0] === true && validation[1] === true) { 
 	acceptForm = true; 
 	console.log("All fields are valid!");
@@ -64,7 +68,7 @@ if (acceptForm === true) {
   		if (xmlhttp.readyState==4 && xmlhttp.status==200){
   			response = xmlhttp.responseText;
   			if (response != "OK") { }
-  			else loadPage("http://bitkraken.net/txt/success.txt", "");
+  			else loadPage("/txt/success.txt", "");
     		}
   	});
  } else { console.log("Can't send, some fields are invalid!"); }

@@ -6,7 +6,7 @@ $content = true;
 $footer_modules = array(
 "js" => array(
 '/static/js/min/script.js',
-'/static/js/min/form.js'
+'/static/js/form.js'
 )
 );
 //$template = 'php/templates/cmc.php';
