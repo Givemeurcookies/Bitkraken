@@ -9,7 +9,7 @@ $template = 'btkr.php';
 $website_title = '404 - Not found';
 $header_modules = array(
 "cs" => array(
-'http://static.bitkraken.net/min/f=css/main.css')
+'http://static.bitkraken.net/static/css/main.css')
 );
 //Body
 	//Header

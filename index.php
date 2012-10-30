@@ -39,8 +39,8 @@
 	}
 	
 	if ($customout == true) { 
-		if (file_exists ("php/templates/".$template)) {
-			require ("php/templates/".$template);
+		if (file_exists ("templates/".$template)) {
+			require ("templates/".$template);
 		} elseif ($exist == true){
 			echo 'Template file is incorrect or not defined';
 		}
@@ -58,8 +58,8 @@
 ?>
 <body>
 <?php 
-	if (file_exists ("rest/php/templates/".$template)) {
-		require ("rest/php/templates/".$template);
+	if (file_exists ("rest/templates/".$template)) {
+		require ("rest/templates/".$template);
 	} elseif ($exist == true){
 		echo 'Template file is incorrect or not defined';
 	}
