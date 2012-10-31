@@ -5,7 +5,7 @@ $content = true;
 //Extras
 $footer_modules = array(
 "js" => array(
-'/static/js/min/script.js',
+'/static/js/script.js',
 '/static/js/form.js'
 )
 );

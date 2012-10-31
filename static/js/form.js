@@ -1,12 +1,8 @@
-var acceptForm = false;
-var formresponse;
-var validation = new Array;
-var togfadeN = true;
-var togfadeM = true;
-var Msgtxt = new Array;
-var Msgname = new Array(['n'],['m']);
-console.log(Msgname[1]);
+console.log("initialized form ver. 0.0.4!");
+
+
 function validateName (){
+<<<<<<< Updated upstream
 	var x=document.forms["prereg"]["name"].value;
 	if (x==null || x=="" || x.length < 3 || hasWhiteSpace(x) == false) return false;
 	else return true;
@@ -24,35 +20,39 @@ function validateEmail(){
 	if (togfadeM === false && changed === true) {setTimeout(function(){fadeMsg("m",1)},TimeDelay);} else if (togfadeM === true) {fadeMsg("m",1)}
 	togfadeM = false;
 	validateCheckpoint();
+=======
+	var x = document.forms["prereg"]["name"].value;
+	if (x==null || x=="" || x.length < 3) return false;
+	else return true;
+>>>>>>> Stashed changes
 }
-//This function is needed
 function validatePassword(){
-
+	return true;
 }
 function fadeMsg(id, num) {
-var x = document.getElementById(id);
-var valid = validation[num];
-if (valid === false) x.className = "msg error"; else x.className = "msg success";
-x.innerHTML = Msgtxt[num];
-init(Msgname[num], 150, 1);
+	var x = document.getElementById(id);
+
+	if (valid === false) x.className = "msg error"; else x.className = "msg success";
+	x.innerHTML = Msgtxt[num];
+	fade(Msgname[num], 150, 1);
 }
 function validateCheckpoint (){
-	//Need to rewrite so functions return boolean, so there is no need for variables.
-	if (validation[0] === true && validation[1] === true) { 
-	acceptForm = true; 
-	console.log("All fields are valid!");
-	sndbtn.className = "sndactive";
+	var x = validateName();
+	var y = validatePassword();
+
+	if (x === true && y === true) {  
+		console.log("All fields are valid!");
+		sndbtn.className = "sndactive";
+		return true;
 	} else { 
-	acceptForm = false;
-	sndbtn.className = "sndgrey";
+		sndbtn.className = "sndgrey";
 	}
+	if (x === true) console.log("Name is valid!");
+	if (y === true) console.log("Password is valid!");
+	return false;
 }
 function sendForm() {
-validateName();
-validateEmail();
-validateCheckpoint();
-if (acceptForm === true) {
-	console.log("Sent!");
+if (validateCheckpoint() === true) {
 	var data="Name="+document.forms["prereg"]["name"].value+"&Email="+document.forms["prereg"]["email"].value;
 	loadData("/secure/prereg.php","POST",data,function(){
   		if (xmlhttp.readyState==4 && xmlhttp.status==200){
@@ -63,4 +63,14 @@ if (acceptForm === true) {
   	});
  } else { console.log("Can't send, some fields are invalid!"); }
 return false;
+}
+//Validate email is not needed right now. 
+function validateEmail(){
+	var x=document.forms["prereg"]["email"].value;
+	var atpos=x.indexOf("@");
+	var dotpos=x.lastIndexOf(".");
+	if (atpos<1 || dotpos<atpos+2 || dotpos+2>=x.length){  return false; Msgtxt[1] = "Incorrect Email!"} 
+	else { return true; Msgtxt[1] = "";}
+
+	validateCheckpoint();
 }

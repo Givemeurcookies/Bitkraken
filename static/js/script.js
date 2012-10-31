@@ -2,7 +2,7 @@
 // Created by Ramen, in the long time ago.
 //
 
-console.log("initialized the script!");
+console.log("initialized script ver. 0.0.2!");
 // Variables
 var TimeToFade = 100.0;
 var TimeDelay = TimeToFade+25;
@@ -27,7 +27,7 @@ function loadData(url,format,data,cfunc){
 	xmlhttp.send(data); }
 }
 function loadPage(url,data){
-	init(idmaincontent, TimeToFade, 0);
+	fade(idmaincontent, TimeToFade, 0);
 	curl[0] = "/"+url;
 	curl[1] = url.capitalize()+" - Bitkraken";
 	if (data === 'static') { url = '/txt/'+url+'.txt'; data = ''; }
@@ -52,29 +52,34 @@ function loadJS(url) {
   oHead.appendChild( oScript);
   console.log("Loaded JS file: "+url);
 }
-function backPage() {
-init(idmaincontent, TimeToFade, 1);
-pageresponse = saveDocument;
-setTimeout(addtoPage, TimeDelay)
-}
-function hasWhiteSpace(s) {
-  return s.indexOf(' ') >= 0;
-}
-function waitFade(itemtofade) {
-init(itemtofade, TimeToFade, 1);
-}
+//function backPage() {
+//fade(idmaincontent, TimeToFade, 1);
+//pageresponse = saveDocument;
+//setTimeout(addtoPage, TimeDelay)
+//}
+//function hasWhiteSpace(s) {
+//  return s.indexOf(' ') >= 0;
+//}
+//function waitFade(itemtofade) {
+//fade(itemtofade, TimeToFade, 1);
+//}
 function addtoPage(){
 	document.getElementById("mainbody").innerHTML = pageresponse;
+<<<<<<< Updated upstream
     	init(idmaincontent, TimeToFade, 1);
 }
 //
 String.prototype.capitalize = function() {
     return this.charAt(0).toUpperCase() + this.slice(1);
+=======
+    	fade(idmaincontent, TimeToFade, 1);
+>>>>>>> Stashed changes
 }
 
 window.onpopstate = function(e){
-    if(e.state){
-      fade('mainbody');
+    console.log("Detected popstate "+e.state);
+    if(e.state != null){
+      fade(idmaincontent, TimeToFade, 0);
     	pageresponse = e.state.txt;
     	document.title = e.state.pageTitle;
     	setTimeout(addtoPage, TimeDelay)
@@ -87,6 +92,9 @@ var animateFade = function(elmOrElmId, duration, state) {
         this.setOptions(elmOrElmId, duration, state);
 };
 
+String.prototype.capitalize = function() {
+    return this.charAt(0).toUpperCase() + this.slice(1);
+}
 //prototype its helper functions
 animateFade.prototype = {
        
@@ -146,7 +154,7 @@ animateFade.prototype = {
 };
 
 //initialize function
-var init = function(elmsOrElmIdArr, duration, state) {
+var fade = function(elmsOrElmIdArr, duration, state) {
         for (var i = 0, l = elmsOrElmIdArr.length; i < l; i++) {
                 //use "new" keyword to create separate instances
                 new animateFade(elmsOrElmIdArr[i], duration, state);
