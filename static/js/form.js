@@ -8,24 +8,14 @@ var Msgname = new Array(['n'],['m']);
 console.log(Msgname[1]);
 function validateName (){
 	var x=document.forms["prereg"]["name"].value;
-	var changed = false;
-	var checkchange = validation[0];
-	if (x==null || x=="" || x.length < 3 || hasWhiteSpace(x) == false) { validation[0] = false; Msgtxt[0] = "Incorrect!";}
-	else { validation[0] = true; Msgtxt[0] = "";}
-	
-	if (checkchange != validation[0]) changed = true;
-	if (togfadeN === false && changed === true) { init(Msgname[0], TimeToFade, 0);}
-	if (togfadeN === false && changed === true) {setTimeout(function(){fadeMsg("n",0)},TimeDelay);} else if (togfadeN === true) {fadeMsg("n",0)}
-	togfadeN = false;
-	if (changed === true) validateCheckpoint();
+	if (x==null || x=="" || x.length < 3 || hasWhiteSpace(x) == false) return false;
+	else return true;
 }
 //Validate email is not needed right now. 
 function validateEmail(){
 	var x=document.forms["prereg"]["email"].value;
 	var atpos=x.indexOf("@");
 	var dotpos=x.lastIndexOf(".");
-	var changed = false;
-	var checkchange = validation[1];
 	if (atpos<1 || dotpos<atpos+2 || dotpos+2>=x.length){ validation[1] = false; Msgtxt[1] = "Incorrect Email!"} 
 	else { validation[1] = true; Msgtxt[1] = "";}
 	

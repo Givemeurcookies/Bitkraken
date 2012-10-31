@@ -67,6 +67,7 @@ function addtoPage(){
 	document.getElementById("mainbody").innerHTML = pageresponse;
     	init(idmaincontent, TimeToFade, 1);
 }
+//
 String.prototype.capitalize = function() {
     return this.charAt(0).toUpperCase() + this.slice(1);
 }
