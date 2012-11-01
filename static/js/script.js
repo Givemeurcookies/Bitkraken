@@ -29,24 +29,24 @@ function loadPage(url,data){
 	if (data === 'static') { url = '/txt/'+url+'.txt'; data = ''; }
 	console.log("Data:"+data+"; Trying to get from URL: "+url);
 	loadData(url,"GET",data,function(){
-  		if (xmlhttp.readyState==4 && xmlhttp.status==200){
-  			if (curl[0] === "/main") { curl[0] = "/"; curl[1] = "Bitkraken"; if (formed === false){ loadJS("form.js"); formed = true; }}
-  		    pageresponse = xmlhttp.responseText;
-  			if (window.location.pathname != curl[0]) 
+  	if (xmlhttp.readyState==4 && xmlhttp.status==200){
+  		if (curl[0] === "/main") { curl[0] = "/"; curl[1] = "Bitkraken"; if (formed === false){ loadJS("form.js"); formed = true; }}
+  	    pageresponse = xmlhttp.responseText;
+  		if (window.location.pathname != curl[0]) 
           window.history.pushState({"txt":pageresponse,"pageTitle":curl[1]},"", curl[0]);
-  			  saveDocument = document.getElementById("mainbody").innerHTML;
-  		    document.title = curl[1];
+          saveDocument = document.getElementById("mainbody").innerHTML;
+          document.title = curl[1];
   		    setTimeout(addtoPage, TimeDelay)
     		}
   	});
 }
 function loadJS(url) {
   url = "/static/min/"+url;
-  var oHead = document.getElementsByTagName('HEAD').item(0);
-  var oScript= document.createElement("script");
-  oScript.type = "text/javascript";
-  oScript.src=url;
-  oHead.appendChild( oScript);
+  var Head = document.getElementsByTagName('HEAD').item(0);
+  var Script= document.createElement("script");
+  Script.type = "text/javascript";
+  Script.src=url;
+  Head.appendChild(oScript);
   console.log("Loaded JS file: "+url);
 }
 //function backPage() {
@@ -64,7 +64,6 @@ function addtoPage(){
 	document.getElementById("mainbody").innerHTML = pageresponse;
       	init(idmaincontent, TimeToFade, 1);
 }
-//
 
 window.onpopstate = function(e){
     console.log("Detected popstate "+e.state);
@@ -93,65 +92,62 @@ String.prototype.capitalize = function() {
 //prototype its helper functions
 animateFade.prototype = {
        
-        setOptions: function(elmOrElmId, duration, state) {
-               
-                //set options
-                this.fadeDuration = duration;
-                this.element = (typeof elmOrElmId == 'string') ? document.getElementById(elmOrElmId) : elmOrElmId;
-                this.fadeState = (state && state == 1) ? 1 : -1;//default -1 fade out, 1 fade in
-                this.fadeTimeLeft = duration;//preset to passed duration, then overwrite
-                this.lastTick = this.newTick();
-               
-                //start animation
-                this.animate();
-        },
+      setOptions: function(elmOrElmId, duration, state) {     
+        //set options
+        this.fadeDuration = duration;
+        this.element = (typeof elmOrElmId == 'string') ? document.getElementById(elmOrElmId) : elmOrElmId;
+        this.fadeState = (state && state == 1) ? 1 : -1;//default -1 fade out, 1 fade in
+        this.fadeTimeLeft = duration;//preset to passed duration, then overwrite
+        this.lastTick = this.newTick();
+
+        //start animation
+        this.animate();
+      },
        
-        newTick: function() {
-                return new Date().getTime();
-        },
+      newTick: function() {
+        return new Date().getTime();
+      },
        
-        returnElapsedTicks: function() {
-                return this.currentTick - this.lastTick;
-        },
+      returnElapsedTicks: function() {
+        return this.currentTick - this.lastTick;
+      },
        
-        animate: function() {
+      animate: function() {
+
+        this.currentTick = this.newTick();
                
-                this.currentTick = this.newTick();
+        var self = this;
+        var elapsedTicks = this.returnElapsedTicks();
+     
+        //helper function, called in the timeout below, to recurse while maintaining correct reference of "this"
+        var helper = function() {
+          self.animate();
+        };
                
-                var self = this;
-                var elapsedTicks = this.returnElapsedTicks();
-               
-                //helper function, called in the timeout below, to recurse while maintaining correct reference of "this"
-                var helper = function() {
-                        self.animate();
-                };
-               
-                if (this.fadeTimeLeft <= elapsedTicks) {
-                        this.element.style.opacity = (this.fadeState == -1) ? 0 : 1;
-                        this.element.style.filter = 'alpha(opacity = ' + (this.fadeState == -1) ? 0 : 100 + ')';
-                        return;
-                }
-               
-                this.fadeTimeLeft -= elapsedTicks;
-               
-                var newOptVal = this.fadeTimeLeft / this.fadeDuration;
-               
-                newOptVal = (this.fadeState == -1) ? newOptVal : (1 - newOptVal);
-               
-                this.element.style.opacity = newOptVal;
-                this.element.style.filter = 'alpha(opacity = ' + (newOptVal * 100) + ')';
-               
-                this.lastTick = this.currentTick;
-                this.currentTick = this.newTick();
-               
-                setTimeout(helper, 33);
+        if (this.fadeTimeLeft <= elapsedTicks) {
+          this.element.style.opacity = (this.fadeState == -1) ? 0 : 1;
+          this.element.style.filter = 'alpha(opacity = ' + (this.fadeState == -1) ? 0 : 100 + ')';
+          return;
         }
+               
+        this.fadeTimeLeft -= elapsedTicks;
+        var newOptVal = this.fadeTimeLeft / this.fadeDuration;
+               
+        newOptVal = (this.fadeState == -1) ? newOptVal : (1 - newOptVal);
+               
+        this.element.style.opacity = newOptVal;
+        this.element.style.filter = 'alpha(opacity = ' + (newOptVal * 100) + ')';
+               
+        this.lastTick = this.currentTick;
+        this.currentTick = this.newTick();
+               
+        setTimeout(helper, 33);
+      }
 };
 
 //initialize function
 var fade = function(elmsOrElmIdArr, duration, state) {
         for (var i = 0, l = elmsOrElmIdArr.length; i < l; i++) {
-                //use "new" keyword to create separate instances
                 new animateFade(elmsOrElmIdArr[i], duration, state);
         }
 };
