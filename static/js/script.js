@@ -1,7 +1,3 @@
-//
-// Created by Ramen, in the long time ago.
-//
-
 console.log("initialized script ver. 0.0.2!");
 // Variables
 var TimeToFade = 100.0;
@@ -35,11 +31,12 @@ function loadPage(url,data){
 	loadData(url,"GET",data,function(){
   		if (xmlhttp.readyState==4 && xmlhttp.status==200){
   			if (curl[0] === "/main") { curl[0] = "/"; curl[1] = "Bitkraken"; if (formed === false){ loadJS("form.js"); formed = true; }}
-  			pageresponse = xmlhttp.responseText;
-  			if (window.location.pathname != curl[0]) window.history.pushState({"txt":pageresponse,"pageTitle":curl[1]},"", curl[0]);
-  			saveDocument = document.getElementById("mainbody").innerHTML;
-  			document.title = curl[1];
-  			setTimeout(addtoPage, TimeDelay)
+  		    pageresponse = xmlhttp.responseText;
+  			if (window.location.pathname != curl[0]) 
+          window.history.pushState({"txt":pageresponse,"pageTitle":curl[1]},"", curl[0]);
+  			  saveDocument = document.getElementById("mainbody").innerHTML;
+  		    document.title = curl[1];
+  		    setTimeout(addtoPage, TimeDelay)
     		}
   	});
 }
@@ -65,16 +62,9 @@ function loadJS(url) {
 //}
 function addtoPage(){
 	document.getElementById("mainbody").innerHTML = pageresponse;
-<<<<<<< Updated upstream
-    	init(idmaincontent, TimeToFade, 1);
+      	init(idmaincontent, TimeToFade, 1);
 }
 //
-String.prototype.capitalize = function() {
-    return this.charAt(0).toUpperCase() + this.slice(1);
-=======
-    	fade(idmaincontent, TimeToFade, 1);
->>>>>>> Stashed changes
-}
 
 window.onpopstate = function(e){
     console.log("Detected popstate "+e.state);
@@ -94,6 +84,11 @@ var animateFade = function(elmOrElmId, duration, state) {
 
 String.prototype.capitalize = function() {
     return this.charAt(0).toUpperCase() + this.slice(1);
+}
+
+String.prototype.capitalize = function() {
+    return this.charAt(0).toUpperCase() + this.slice(1);
+    fade(idmaincontent, TimeToFade, 1);
 }
 //prototype its helper functions
 animateFade.prototype = {
