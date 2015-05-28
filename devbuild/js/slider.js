@@ -2,19 +2,21 @@ var slider;
 (function() {
 	var slide = 0,
 		slideImgs = [
-			'img/art.jpg',
 			'img/autumnabyss.jpg',
 			'img/dragon.jpg'
 		];
 
-	var slideDoc = document.getElementsByClassName("slides")[0];
+	var slideDoc = document.getElementsByClassName("slides")[0].getElementsByTagName("figure")[0];
 
 	function init(){
-		var imgCont = document.createElement("img");
-		imgCont.src = slideImgs[0];
-		slideDoc.appendChild(imgCont);
+		for(imgUrl in slideImgs){
+			var imgCont = document.createElement("img");
+			imgCont.src = slideImgs[imgUrl];
+			slideDoc.appendChild(imgCont);
 
-		slideDoc.getElementsByTagName("img")[0].className = "show";	
+			slideDoc.getElementsByTagName("img")[0].className = "show";
+		}
+		console.log("Hello!");
 	}
 
 	function nextSlide(){
