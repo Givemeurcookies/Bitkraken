@@ -36,7 +36,7 @@ function Init()
             "y"     : i,
             "x"     : 0,
             "delay" : getRandomInt(0, 20),
-            "color" : generateRandomColor([35,175,250])}
+            "color" : generateRandomColor([153,66,20])}
         ));
     }
 }
@@ -66,15 +66,16 @@ function fullSizeCanvas() {
 }
 function drawSquare(pos, opacity, rgb){
     var size = Math.floor(canvasMeta.height/100*5);
-        
-
     hdc.clearRect(size*pos.x,
                  size*pos.y,
                  size,
                  size);
+
+
     hdc.globalAlpha=opacity;
     hdc.fillStyle = 'rgb(' + rgb.red + ',' +
                     rgb.green + ','+rgb.blue+')';
+
     hdc.fillRect(size*pos.x,
                  size*pos.y,
                  size,
@@ -126,9 +127,9 @@ function generateRandomColor(mix) {
 
     // mix the color
     if (mix != null) {
-        red = (red + mix[0]) / 2;
-        green = (green + mix[1]) / 2;
-        blue = (blue + mix[2]) / 2;
+        red   = Math.floor((red   + mix[0]) / 2);
+        green = Math.floor((green + mix[1]) / 2);
+        blue  = Math.floor((blue  + mix[2]) / 2);
     }
 
     rgb = {"red" : red, "green" : green, "blue" : blue};
