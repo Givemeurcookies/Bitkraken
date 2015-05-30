@@ -2,7 +2,7 @@ var canvas     = document.getElementById('headCanvas'),
     hdc        = canvas.getContext('2d'),
     canvasMeta = {},
     helloInt   = [],
-    gt         = makeGlobalTimer(100);
+    gt         = makeGlobalTimer(200);
 
 function Init()
 {
@@ -26,17 +26,23 @@ function registerSquareTrail(tileY){
         this.x     = result.x;
 
         // Set max height here
-        if(this.x == 20) {
+        if((this.x - this.delay)-Random.getInt(0, 4) >= 0 && !this.spawnedNew) {
             registerSquareTrail(this.y);
+            this.spawnedNew = true;
+        }
+
+        if(this.x == 20) {
+            if (!this.spawnedNew) registerSquareTrail(this.y);
             gt.cancelCallback(this.id);
         }
     
     }.bind({
-        "id"    : callbackID,
-        "y"     : tileY,
-        "x"     : 0,
-        "delay" : Random.getInt(0, 20),
-        "color" : Random.getColor([153,66,20])}
+        "id"         : callbackID,
+        "spawnedNew" : false,
+        "y"          : tileY,
+        "x"          : 0,
+        "delay"      : Random.getInt(0, 20),
+        "color"      : Random.getColor([153,66,20])}
     ), callbackID);
 }
 
