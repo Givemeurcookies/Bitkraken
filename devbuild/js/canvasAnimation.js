@@ -1,19 +1,40 @@
-function Init()
-{
-    var can = document.getElementById('headCanvas');
-	h=parseInt(document.getElementById("headCanvas").height);
-	w=parseInt(document.getElementById("headCanvas").width);
-	console.log(can);
-  	// get it's context
-    hdc = can.getContext('2d');
-
-    hdc.strokeStyle = 'red';
-    hdc.lineWidth = 2;
-
-    // Fill the path
-    hdc.fillStyle = "#000";
-    hdc.fillRect(0,0,w,h);
-    can.style.opacity = '0.2';
-}
+var canvas  = document.getElementById('headCanvas'),
+    hdc     = canvas.getContext('2d'),
+    canvasMeta = {};
 
 Init();
+
+
+function Init()
+{
+    // Set canvas to be fullsized
+    fullSizeCanvas();
+
+    // Fill the path
+    hdc.fillStyle = "red";
+    hdc.fillRect(0,0,canvasMeta.height/100*5,canvasMeta.height/100*5);
+}
+
+
+// Fullsize canvas function:
+// This resizes the canvas to fit the parent container
+// Todo
+// Does this function abuse variable cache?
+// Is canvasMeta needed?
+
+function fullSizeCanvas() {
+    canParent = canvas.parentNode;
+    canvasMeta.height = parseInt(canParent.scrollHeight);
+    canvasMeta.width  = parseInt(canParent.scrollWidth);
+
+    hdc = canvas.getContext('2d');
+
+    var pixelRatio = window.devicePixelRatio;
+
+    canvas.width  = canvasMeta.width  * pixelRatio;
+    canvas.height = canvasMeta.height * pixelRatio;
+
+    canvas.style.width  = canvasMeta.width;
+    canvas.style.height = canvasMeta.height;
+    hdc.scale(pixelRatio, pixelRatio);
+}
