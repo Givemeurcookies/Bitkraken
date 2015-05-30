@@ -1,10 +1,8 @@
 var canvas     = document.getElementById('headCanvas'),
     hdc        = canvas.getContext('2d'),
     canvasMeta = {},
-    helloInt   = [];
-
-Init();
-
+    helloInt   = [],
+    gt         = makeGlobalTimer(100);
 
 function Init()
 {
@@ -12,35 +10,54 @@ function Init()
     fullSizeCanvas();
 
     // Fill the path
-    var gt = makeGlobalTimer(100);
     for(var i = 0; i < 60; i++){
-        helloInt[i] = 0;
-        gt.registerCallback(function () {
-
-            if(this.delay < 0){
-                for(var i = 0; i < 6; i++){
-                    drawSquare({
-                        "x" : this.y,
-                        "y" : this.x-i
-                    }, 
-                    1-(0.20*i),
-                    this.color);
-                }
-
-                this.x++;
-            } else {
-                this.delay--;
-            }
-        
-        }.bind({
-            "y"     : i,
-            "x"     : 0,
-            "delay" : getRandomInt(0, 20),
-            "color" : generateRandomColor([153,66,20])}
-        ));
+        registerSquareTrail(i);
     }
 }
 
+function registerSquareTrail(tileY){
+    var callbackID = (Random.getString(30, 'aA#!'));
+    gt.registerCallback(function () {
+
+        var result = needAName(this.x, this.y, this.delay, this.color);
+
+        // Save the results
+        this.delay = result.delay;
+        this.x     = result.x;
+
+        // Set max height here
+        if(this.x == 20) {
+            registerSquareTrail(this.y);
+            gt.cancelCallback(this.id);
+        }
+    
+    }.bind({
+        "id"    : callbackID,
+        "y"     : tileY,
+        "x"     : 0,
+        "delay" : Random.getInt(0, 20),
+        "color" : Random.getColor([153,66,20])}
+    ), callbackID);
+}
+
+function needAName(x, y, delay, color){
+    if(delay < 0){
+        for(var i = 0; i < 6; i++){
+            drawSquare({
+                "x" : y,
+                "y" : x-i
+                }, 
+                1-(0.20*i),
+                color
+            );
+        }
+
+        x++;
+    } else {
+        delay--;
+    }
+    return {"x" : x, "delay" : delay}
+}
 
 // Fullsize canvas function:
 // This resizes the canvas to fit the parent container
@@ -82,10 +99,6 @@ function drawSquare(pos, opacity, rgb){
                  size);
 }
 
-function getRandomInt(min, max) {
-  return Math.floor(Math.random() * (max - min)) + min;
-}
-
 
 // Thanks to:
 // http://stackoverflow.com/a/2699792/1327054
@@ -93,10 +106,10 @@ function makeGlobalTimer(freq) {
   freq = freq || 1000;
 
   // array of callback functions
-  var callbacks = [];
+  var callbacks = {};
 
   // register the global timer
-  var id = setInterval(
+  var globalId = setInterval(
     function() {
       var idx;
       for (idx in callbacks) {
@@ -107,8 +120,15 @@ function makeGlobalTimer(freq) {
   // return a Global Timer object
   return {
     "id": function() { return id; },
-    "registerCallback": function(cb) {
-      callbacks.push(cb);
+    "registerCallback": function(cb, callbackID) {
+        callbacks[callbackID] = cb;
+
+        return true;
+    },
+    "cancelCallback": function(cbID){
+        delete callbacks[cbID];
+
+        return true;
     },
     "cancel": function() {
       if (id !== null) {
@@ -119,19 +139,38 @@ function makeGlobalTimer(freq) {
   };
 }
 
-function generateRandomColor(mix) {
+var Random = {
+    getInt : function(min, max) {
+        return Math.floor(Math.random() * (max - min)) + min;
+    },
 
-    var red   = getRandomInt(0, 256),
-        green = getRandomInt(0, 256),
-        blue =  getRandomInt(0, 256);
+    getString: function(length, chars) {
+        var mask = '';
+        if (chars.indexOf('a') > -1) mask += 'abcdefghijklmnopqrstuvwxyz';
+        if (chars.indexOf('A') > -1) mask += 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        if (chars.indexOf('#') > -1) mask += '0123456789';
+        if (chars.indexOf('!') > -1) mask += '~`!@#$%^&*()_+-={}[]:";\'<>?,./|\\';
+        var result = '';
+        for (var i = length; i > 0; --i) result += mask[Math.round(Math.random() * (mask.length - 1))];
+        
+        return result;
+    },
 
-    // mix the color
-    if (mix != null) {
-        red   = Math.floor((red   + mix[0]) / 2);
-        green = Math.floor((green + mix[1]) / 2);
-        blue  = Math.floor((blue  + mix[2]) / 2);
+    getColor : function(baseColor) {
+
+        var red   = Random.getInt(0, 256),
+            green = Random.getInt(0, 256),
+            blue =  Random.getInt(0, 256);
+
+        if (baseColor != null) {
+            red   = Math.floor((red   + baseColor[0]) / 2);
+            green = Math.floor((green + baseColor[1]) / 2);
+            blue  = Math.floor((blue  + baseColor[2]) / 2);
+        }
+
+        rgb = {"red" : red, "green" : green, "blue" : blue};
+        return rgb;
     }
+};
 
-    rgb = {"red" : red, "green" : green, "blue" : blue};
-    return rgb;
-}
+Init();
