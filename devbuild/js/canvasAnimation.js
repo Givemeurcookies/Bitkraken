@@ -2,7 +2,7 @@ var canvas     = document.getElementById('headCanvas'),
     hdc        = canvas.getContext('2d'),
     canvasMeta = {},
     helloInt   = [],
-    gt         = makeGlobalTimer(200);
+    gt         = makeGlobalTimer(100);
 
 function Init()
 {
@@ -10,7 +10,7 @@ function Init()
     fullSizeCanvas();
 
     // Fill the path
-    for(var i = 0; i < 60; i++){
+    for(var i = 0; i < 40; i++){
         registerSquareTrail(i);
     }
 }
@@ -26,12 +26,12 @@ function registerSquareTrail(tileY){
         this.x     = result.x;
 
         // Set max height here
-        if((this.x - this.delay)-Random.getInt(0, 4) >= 0 && !this.spawnedNew) {
+        if((this.x - 4) >= 0 && !this.spawnedNew) {
             registerSquareTrail(this.y);
             this.spawnedNew = true;
         }
 
-        if(this.x == 20) {
+        if(this.x >= 20) {
             if (!this.spawnedNew) registerSquareTrail(this.y);
             gt.cancelCallback(this.id);
         }
@@ -41,20 +41,23 @@ function registerSquareTrail(tileY){
         "spawnedNew" : false,
         "y"          : tileY,
         "x"          : 0,
-        "delay"      : Random.getInt(0, 20),
-        "color"      : Random.getColor([153,66,20])}
+        "delay"      : Random.getInt(0, 5),
+        "color"      : Random.getColor([35,149,219])}
     ), callbackID);
 }
 
-function needAName(x, y, delay, color){
+function needAName(x, y, delay, rgb){
     if(delay < 0){
+
+        hdc.fillStyle = 'rgb(' + rgb.red + ',' +
+                    rgb.green + ','+rgb.blue+')';
+        
         for(var i = 0; i < 6; i++){
             drawSquare({
                 "x" : y,
                 "y" : x-i
                 }, 
-                1-(0.20*i),
-                color
+                1-(0.20*i)
             );
         }
 
@@ -88,7 +91,7 @@ function fullSizeCanvas() {
     hdc.scale(pixelRatio, pixelRatio);
 }
 function drawSquare(pos, opacity, rgb){
-    var size = Math.floor(canvasMeta.height/100*5);
+    var size = Math.floor(canvasMeta.height/100*7);
     hdc.clearRect(size*pos.x,
                  size*pos.y,
                  size,
@@ -96,8 +99,6 @@ function drawSquare(pos, opacity, rgb){
 
 
     hdc.globalAlpha=opacity;
-    hdc.fillStyle = 'rgb(' + rgb.red + ',' +
-                    rgb.green + ','+rgb.blue+')';
 
     hdc.fillRect(size*pos.x,
                  size*pos.y,
@@ -169,9 +170,9 @@ var Random = {
             blue =  Random.getInt(0, 256);
 
         if (baseColor != null) {
-            red   = Math.floor((red   + baseColor[0]) / 2);
-            green = Math.floor((green + baseColor[1]) / 2);
-            blue  = Math.floor((blue  + baseColor[2]) / 2);
+            red   = Math.floor((red   + baseColor[0]*4) / 5);
+            green = Math.floor((green + baseColor[1]*4) / 5);
+            blue  = Math.floor((blue  + baseColor[2]*4) / 5);
         }
 
         rgb = {"red" : red, "green" : green, "blue" : blue};
